@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1> Plusieurs Concerts sont à venir.</h1>
+        <div class="container">
+            {% for concert in concerts %}
+            <div class="card" style="width: 18rem;margin-bottom: 10px;">
+                <div class="card-body">
+                <div class="card-title">{{ concert.date|date('d/m/Y') }} </div>
+                    <p class="card-text">{{ concert.tourName|e }}</p>
+                    <a href="#" class="card-link">Détails</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
+

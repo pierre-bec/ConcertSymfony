@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Membres index{% endblock %}
+
+{% block body %}
+    <h1>Membres index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>FirstName</th>
+                <th>Job</th>
+                <th>BirthDate</th>
+                <th>Picture</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for member in members %}
+            <tr>
+                <td>{{ member.id }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.firstName }}</td>
+                <td>{{ member.job }}</td>
+                <td>{{ member.birthDate ? member.birthDate|date('Y-m-d') : '' }}</td>
+                <td>{{ member.picture }}</td>
+                <td>
+                    <button type="button" class="btn btn-danger"><a href="{{ path('member_show', {'id': member.id}) }}">Voir</a></button>
+                    <button type="button" class="btn btn-success"><a href="{{ path('member_edit', {'id': member.id}) }}">Modifier</a></button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('member_new') }}">Ajouter un Membre</a>
+{% endblock %}

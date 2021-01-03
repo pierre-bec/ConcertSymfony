@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupes index{% endblock %}
+
+{% block body %}
+    <h1>Groupes index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Style</th>
+                <th>Picture</th>
+                <th>CreationYear</th>
+                <th>LastAlbumName</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for band in bands %}
+            <tr>
+                <td>{{ band.id }}</td>
+                <td>{{ band.name }}</td>
+                <td>{{ band.style }}</td>
+                <td>{{ band.picture }}</td>
+                <td>{{ band.creationYear ? band.creationYear|date('Y-m-d') : '' }}</td>
+                <td>{{ band.lastAlbumName }}</td>
+                <td>
+                    <button type="button" class="btn btn-danger"><a href="{{ path('band_show', {'id': band.id}) }}">Voir</a></button>
+                    <button type="button" class="btn btn-success"><a href="{{ path('band_edit', {'id': band.id}) }}">Modifier</a></button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('band_new') }}">Nouveau Groupe</a>
+{% endblock %}
