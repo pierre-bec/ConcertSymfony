@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * @Route("/concerts")
- */
+
 class ConcertController extends AbstractController
 {
     /**
-     * @Route("/", name="concert_index", methods={"GET"})
+     * @Route("/concerts", name="concert_index", methods={"GET"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function index(ConcertRepository $concertRepository): Response
     {
@@ -28,18 +28,19 @@ class ConcertController extends AbstractController
     }
 
     /**
-     * @Route("/index", name="concert_next", methods={"GET"})
+     * @Route("/", name="concert_next", methods={"GET"})
      */
     public function nextConcerts(ConcertRepository $concertRepository): Response
     {
 
         return $this->render('concert/public/concert.html.twig', [
-            'concerts' => $concertRepository->findAll()
+            'concerts' => $concertRepository->find10next()
         ]);
     }
 
     /**
-     * @Route("/new", name="concert_new", methods={"GET","POST"})
+     * @Route("/concerts/new", name="concert_new", methods={"GET","POST"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -62,7 +63,8 @@ class ConcertController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="concert_show", methods={"GET"})
+     * @Route("/concerts/{id}", name="concert_show", methods={"GET"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function show(Concert $concert): Response
     {
@@ -72,7 +74,8 @@ class ConcertController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="concert_edit", methods={"GET","POST"})
+     * @Route("/concerts/{id}/edit", name="concert_edit", methods={"GET","POST"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Concert $concert): Response
     {
@@ -92,7 +95,8 @@ class ConcertController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="concert_delete", methods={"DELETE"})
+     * @Route("/concerts/{id}", name="concert_delete", methods={"DELETE"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Concert $concert): Response
     {

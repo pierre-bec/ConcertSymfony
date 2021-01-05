@@ -8,6 +8,7 @@ use App\Repository\MemberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -17,6 +18,7 @@ class MemberController extends AbstractController
 {
     /**
      * @Route("/", name="member_index", methods={"GET"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function index(MemberRepository $memberRepository): Response
     {
@@ -27,6 +29,7 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/new", name="member_new", methods={"GET","POST"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -50,6 +53,7 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/{id}", name="member_show", methods={"GET"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function show(Member $member): Response
     {
@@ -60,6 +64,7 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="member_edit", methods={"GET","POST"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Member $member): Response
     {
@@ -80,6 +85,7 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/{id}", name="member_delete", methods={"DELETE"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Member $member): Response
     {

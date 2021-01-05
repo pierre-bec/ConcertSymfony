@@ -10,14 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * @Route("/bandAdmin")
- */
+
 class BandController extends AbstractController
 {
     /**
-     * @Route("/", name="band_index", methods={"GET"})
+     * @Route("/bandAdmin", name="band_index", methods={"GET"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function index(BandRepository $bandRepository): Response
     {
@@ -27,7 +27,8 @@ class BandController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="band_new", methods={"GET","POST"})
+     * @Route("/bandAdmin/new", name="band_new", methods={"GET","POST"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -50,7 +51,8 @@ class BandController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="band_show", methods={"GET"})
+     * @Route("/bandAdmin/{id}", name="band_show", methods={"GET"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function show(Band $band): Response
     {
@@ -60,7 +62,8 @@ class BandController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="band_edit", methods={"GET","POST"})
+     * @Route("/bandAdmin/{id}/edit", name="band_edit", methods={"GET","POST"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Band $band): Response
     {
@@ -80,7 +83,8 @@ class BandController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="band_delete", methods={"DELETE"})
+     * @Route("/bandAdmin/{id}", name="band_delete", methods={"DELETE"})
+     * @isGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Band $band): Response
     {
@@ -91,5 +95,41 @@ class BandController extends AbstractController
         }
 
         return $this->redirectToRoute('band_index');
+    }
+
+    /**
+     * Affiche une liste de groupe
+     *
+     * @return Response
+     *
+     * @Route("/bands", name="band_list")
+     */
+    public function bandsAll(): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Band::class);
+        $bands = $repository->findAll();
+        return $this->render('band/public/list.html.twig', [
+                'bands' => $bands
+            ]
+        );
+    }
+
+    /**
+     * Affiche une liste de groupe
+     *
+     * @param int $id
+     * @return Response
+     *
+     * @Route("/band/{id}", name="band_concert")
+     */
+    public function list(int $id): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Band::class);
+
+        return $this->render('band/public/band.html.twig', [
+                'band' => $repository->find($id),
+                'concerts' => $this->getDoctrine()->getRepository(Concert::class)->find10next(),
+            ]
+        );
     }
 }

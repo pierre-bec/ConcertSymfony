@@ -10,7 +10,7 @@
         <div class="card-deck">
         {% for member in band.members %}
 
-            <div class="card">
+            <div class="card" style="width: 18rem; margin-bottom: 10px;">
                 <img src="{{ asset('images/'~ member.picture) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ member.name }} {{ member.firstname }}</h5>
@@ -28,8 +28,8 @@
 
     <div class="card-deck">
     {% for concert in concerts %}
-        {% if concert.date|date('Y-m-d') > "now"|date('Y-m-d') and band in concert.bands %}
-            <div class="card" style="width: 18rem;margin: 10px;">
+        {% if band in concert.bands %}
+            <div class="card" style="width: 18rem; margin: 10px;">
                 <div class="card-body">
                     <div class="card-title">{{ concert.date|date('d/m/Y') }} </div>
                     <p class="card-text">{{ concert.tourName|e }}</p>

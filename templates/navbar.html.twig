@@ -9,6 +9,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="http://localhost/ConcertSymfony/public/bands">Groupes</a>
             </li>
+            {% if app.user %}
+            {% if "ROLE_ADMIN" in app.user.roles %}
             <li class="nav-item active">
                 <a class="nav-link" href="http://localhost/ConcertSymfony/public/concerts">Concerts(Admin)</a>
             </li>
@@ -18,6 +20,22 @@
             <li class="nav-item active">
                 <a class="nav-link" href="http://localhost/ConcertSymfony/public/bandAdmin">Groupes(Admin)</a>
             </li>
+            {% endif %}
+            {% endif %}
+            <li class="nav-item active right">
+                <a class="nav-link" href="http://localhost/ConcertSymfony/public/login">{% if app.user %} {{ app.user.LastName}} {{ app.user.FirstName }} {% else %}Login {% endif %}</a>
+            </li>
+
+            {% if app.user %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="http://localhost/ConcertSymfony/public/logout">Déconnexion</a>
+                </li>
+            {% else %}
+            <li class="nav-item active right">
+                <a class="nav-link" href="http://localhost/ConcertSymfony/public/register">register</a>
+            </li>
+            {% endif %}
+
 
         </ul>
     </div>

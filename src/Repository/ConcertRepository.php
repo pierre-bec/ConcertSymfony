@@ -19,22 +19,23 @@ class ConcertRepository extends ServiceEntityRepository
         parent::__construct($registry, Concert::class);
     }
 
-    // /**
-    //  * @return Concert[] Returns an array of Concert objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * fin 10 next
+    * @return int|mixed|string
+    */
+
+    public function find10next()
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->andWhere('c.date > :now')
+            ->setParameter('now', new \DateTime('now'))
+            ->orderBy('c.date', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Concert
