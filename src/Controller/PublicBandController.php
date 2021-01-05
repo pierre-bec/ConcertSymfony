@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Band;
+use App\Entity\Concert;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,7 +41,8 @@ class PublicBandController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Band::class);
 
         return $this->render('band/public/band.html.twig', [
-                'band' => $repository->find($id)
+                'band' => $repository->find($id),
+                'concerts' => $this->getDoctrine()->getRepository(Concert::class)->findAll(),
             ]
         );
     }
