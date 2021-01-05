@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="http://localhost/ConcertSymfony/public/concerts/index">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -10,30 +11,40 @@
                 <a class="nav-link" href="http://localhost/ConcertSymfony/public/bands">Groupes</a>
             </li>
             {% if app.user %}
-            {% if "ROLE_ADMIN" in app.user.roles %}
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost/ConcertSymfony/public/concerts">Concerts(Admin)</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost/ConcertSymfony/public/members">Membres(Admin)</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost/ConcertSymfony/public/bandAdmin">Groupes(Admin)</a>
-            </li>
+                {% if "ROLE_ADMIN" in app.user.roles %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://localhost/ConcertSymfony/public/concerts">Concerts(Admin)</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://localhost/ConcertSymfony/public/members">Membres(Admin)</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://localhost/ConcertSymfony/public/bandAdmin">Groupes(Admin)</a>
+                    </li>
+                {% endif %}
             {% endif %}
+            {% if app.user %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bonjour {{ app.user.LastName }} {{ app.user.FirstName }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="http://localhost/ConcertSymfony/public/profil">Mon Profil</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item active right">
+                    <a class="nav-link" href="http://localhost/ConcertSymfony/public/login">Login </a>
+                </li>
             {% endif %}
-            <li class="nav-item active right">
-                <a class="nav-link" href="http://localhost/ConcertSymfony/public/login">{% if app.user %} {{ app.user.LastName}} {{ app.user.FirstName }} {% else %}Login {% endif %}</a>
-            </li>
-
             {% if app.user %}
                 <li class="nav-item active">
                     <a class="nav-link" href="http://localhost/ConcertSymfony/public/logout">Déconnexion</a>
                 </li>
             {% else %}
-            <li class="nav-item active right">
-                <a class="nav-link" href="http://localhost/ConcertSymfony/public/register">register</a>
-            </li>
+                <li class="nav-item active right">
+                    <a class="nav-link" href="http://localhost/ConcertSymfony/public/register">register</a>
+                </li>
             {% endif %}
 
 

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block title %}Edit Member{% endblock %}
+
+{% block body %}
+    <h1>Edit Profil</h1>
+
+    {{ include('member/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('profil_index') }}">back to Profil</a>
+
+{% endblock %}
